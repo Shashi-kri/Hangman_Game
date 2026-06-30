@@ -1,21 +1,7 @@
-"""
-Hangman Game — Console Edition
-================================
-A simple text-based Hangman game where the player guesses a word
-one letter at a time.
-
-Rules:
-  - A random word is chosen from a small predefined list.
-  - The player has 6 incorrect guesses before losing.
-  - Letters are guessed one at a time via keyboard input.
-
-Key Concepts: random, while loop, if-else, strings, lists.
-"""
-
 import random
 
-# WORD LIST  (5 predefined words)
-WORDS = ["python", "hangman", "keyboard", "science", "dragon"]
+# WORD LIST  (10 predefined words)
+WORDS = ["python", "hangman", "keyboard", "science", "dragon", "computer", "human", "elephant", "hamburger","laptop"]
 
 # HANGMAN ASCII STAGES  (0 = safe … 6 = dead)
 HANGMAN_STAGES = [
@@ -98,7 +84,13 @@ MAX_WRONG = 6
 
 def get_display(word: str, guessed: list) -> str:
     """Return the word with un-guessed letters shown as underscores."""
-    return "  ".join(letter if letter in guessed else "_" for letter in word)
+    display = ""
+    for letter in word:
+        if letter in guessed:
+            display += letter + " "
+        else:
+            display += " _ "
+    return display
 
 
 def print_state(wrong_count: int, word: str, guessed: list, wrong_letters: list) -> None:
@@ -127,16 +119,13 @@ def get_valid_guess(guessed: list) -> str:
 
 
 def play_game() -> bool:
-    """
-    Run one full game of Hangman.
-
-    Returns:
-        True if the player won, False if they lost.
-    """
+    """Returns:
+        True if the player won, False if they lost."""
+    
     word = random.choice(WORDS)
-    guessed: list = []       # all letters guessed so far
-    wrong_letters: list = [] # only the incorrect ones
-    wrong_count: int = 0
+    guessed= []       # all letters guessed so far
+    wrong_letters= [] # only the incorrect ones
+    wrong_count= 0
 
     print("\n" + "=" * 40)
     print("       Welcome to HANGMAN!")
@@ -168,10 +157,6 @@ def play_game() -> bool:
     print(f"  GAME OVER! The word was: '{word.upper()}'")
     return False
 
-
-# ─────────────────────────────────────────
-# MAIN LOOP
-# ─────────────────────────────────────────
 
 def main() -> None:
     """Entry point — loops until the player chooses to quit."""
